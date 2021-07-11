@@ -7,33 +7,26 @@ import {User} from "../models/user";
 export const connectedUsers = new UserList();
 export let messages = {};
 
-// export const connectUser = (client: Socket, io: socketIO.Server) => {
-//     const user = new User(client.id);
-//     connectedUsers.addUser(user);
-// };
-
-export const connected = (client: Socket, io: socketIO.Server) => {
-    client.on('connect', () => {
-        console.log('User connected |X|');
-        connectedUsers.addUser(new User(client.id));
-
-        io.emit('active-users', connectedUsers.getList());
-    });
-}
+export const connectUser = (client: Socket) => {
+    const user = new User(client.id);
+    console.log('User connected:    ', client.id);
+    connectedUsers.addUser(user);
+};
 
 export const disconnected = (client: Socket, io: socketIO.Server) => {
     client.on('disconnect', () => {
-        console.log('User disconnected |X|');
+        console.log('User disconnected: ', client.id);
         connectedUsers.deleteUser(client.id);
 
         io.emit('active-users', connectedUsers.getList());
     });
 }
 
-export const message = (client: Socket, socketIO: socketIO.Server) => {
-    client.on('message', (payload: {de: string, body: string}) => {
-        console.log('Received message  |>| ', payload.body);
-        socketIO.emit('new-message', payload);
+export const message = (client: Socket, io: socketIO.Server) => {
+    client.on('message', (payload: {from: string, body: string}) => {
+        console.log('Received message  >| ', payload.body);
+
+        io.emit('new-message', payload);
     });
 }
 

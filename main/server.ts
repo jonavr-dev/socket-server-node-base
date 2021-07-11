@@ -29,7 +29,7 @@ export default class Server {
 
             // Listen Events
 
-            // socket.connectUser(client, this.io);
+            socket.connectUser(client);
 
             socket.disconnected(client, this.io);
 
