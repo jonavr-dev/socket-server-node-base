@@ -23,24 +23,6 @@ export class UserList {
     }
 
     public getList() {
-        return this.list.filter(user => user.name !== 'Unknown');
-    }
-
-    public updateName(id: string, name: string) {
-        for (let user of this.list) {
-            if (user.id === id) {
-                user.name = name;
-                break;
-            }
-        }
-    }
-
-    public updateAvatar(id: string, avatar: number) {
-        for (let user of this.list) {
-            if (user.id === id) {
-                user.avatar = avatar;
-                break;
-            }
-        }
+        return this.list;
     }
 }

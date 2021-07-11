@@ -14,7 +14,7 @@ Generate dist/ using typescript compiler:
 tsc -w
 ```
 
-And in other console run server develop using:
+And in other console run server in develop mode using:
 ```
 nodemon dist/
 ```

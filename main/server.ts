@@ -29,17 +29,13 @@ export default class Server {
 
             // Listen Events
 
-            socket.connectUser(client, this.io);
-
-            socket.configureUser(client, this.io);
-
-            socket.getUsers(client, this.io);
+            // socket.connectUser(client, this.io);
 
             socket.disconnected(client, this.io);
 
             socket.message(client, this.io);
 
-            socket.reaction(client, this.io);
+            socket.getUsers(client, this.io);
         });
     }
 

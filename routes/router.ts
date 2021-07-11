@@ -1,26 +1,25 @@
 
 import {Router, Request, Response} from 'express';
 import Server from "../main/server";
-import {Socket} from "socket.io";
-import {connectedUsers, reactions} from "../sockets/sockets";
+import {messages, connectedUsers} from "../sockets/sockets";
 
 const router = Router();
 
 // Get messages
 router.get('/messages', (req: Request, res: Response) => {
     res.json({
-        ok: true,
-        message: 'All ok!!'
+        ok:true,
+        messages
     });
 });
 
 // Send public message
 router.post('/messages', (req: Request, res: Response) => {
     const body = req.body.data;
-    const de = req.body.de;
+    const from = req.body.from;
 
     const payload = {
-        de,
+        from,
         body
     };
 
@@ -30,11 +29,11 @@ router.post('/messages', (req: Request, res: Response) => {
     res.json({
         ok: true,
         body,
-        de
+        from
     });
 });
 
-// Get users
+// Get users from Socket
 router.get('/users', (req: Request, res: Response) => {
     const server = Server.instance;
 
@@ -53,19 +52,11 @@ router.get('/users', (req: Request, res: Response) => {
         });
 });
 
-// Get users and their names
-router.get('/users-details', (req: Request, res: Response) => {
+// Get users from memory
+router.get('/user-list', (req: Request, res: Response) => {
     res.json({
         ok:true,
-        clients: connectedUsers.getList()
-    });
-});
-
-// Get reactions
-router.get('/reactions', (req: Request, res: Response) => {
-    res.json({
-        ok:true,
-        reactions
+        users: connectedUsers
     });
 });
 
