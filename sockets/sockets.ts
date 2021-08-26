@@ -6,11 +6,15 @@ import {User} from "../models/user";
 
 export const connectedUsers = new UserList();
 export let messages = {};
+let numberUser = 0;
 
-export const connectUser = (client: Socket) => {
-    const user = new User(client.id);
-    console.log('User connected:    ', client.id);
+export const connectUser = (client: Socket, io: socketIO.Server) => {
+    numberUser++;
+    const user = new User(client.id, 'user-' + numberUser);
+    console.log('User connected:    ' + user.name + ' -> ' + client.id);
     connectedUsers.addUser(user);
+
+    io.emit('active-users', connectedUsers.getList());
 };
 
 export const disconnected = (client: Socket, io: socketIO.Server) => {

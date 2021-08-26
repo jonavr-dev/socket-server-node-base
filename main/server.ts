@@ -15,6 +15,7 @@ export default class Server {
     private httpServer: http.Server;
 
     private constructor() {
+        console.log('constructor...');
         this.app = express();
         this.port = SERVER_PORT;
         this.httpServer = new http.Server(this.app);
@@ -29,7 +30,7 @@ export default class Server {
 
             // Listen Events
 
-            socket.connectUser(client);
+            socket.connectUser(client, this.io);
 
             socket.disconnected(client, this.io);
 
@@ -45,6 +46,7 @@ export default class Server {
     }
 
     start(callback: Function) {
+        console.log('start...');
         this.httpServer.listen(this.port, callback());
     }
 }
