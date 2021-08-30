@@ -26,6 +26,12 @@ export const disconnected = (client: Socket, io: socketIO.Server) => {
     });
 }
 
+export const getUsers = (client: Socket, io: socketIO.Server) => {
+    client.on('get-users', () => {
+        io.to(client.id).emit('active-users', connectedUsers.getList());
+    });
+};
+
 export const message = (client: Socket, io: socketIO.Server) => {
     client.on('message', (payload: {from: string, body: string}) => {
         console.log('Received message  >| ', payload.body);
@@ -33,9 +39,3 @@ export const message = (client: Socket, io: socketIO.Server) => {
         io.emit('new-message', payload);
     });
 }
-
-export const getUsers = (client: Socket, io: socketIO.Server) => {
-    client.on('get-users', () => {
-        io.to(client.id).emit('active-users', connectedUsers.getList());
-    });
-};

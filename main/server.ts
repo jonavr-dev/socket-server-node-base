@@ -34,9 +34,9 @@ export default class Server {
 
             socket.disconnected(client, this.io);
 
-            socket.message(client, this.io);
-
             socket.getUsers(client, this.io);
+
+            socket.message(client, this.io);
         });
     }
 
